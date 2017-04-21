@@ -1,6 +1,6 @@
 # place
 
-April Fools 2017
+April Fools 2017, for Clones (2017)
 
 ## Installation
 
@@ -12,19 +12,26 @@ python setup.py build
 sudo python setup.py develop
 ```
 
-Then add the plugin to your ini file:
+Then, add the plugin to your ini file:
 
 ```diff
-############################################ PLUGINS
-# which plugins are enabled (they must be installed via setup.py first)
--plugins = about, liveupdate
-+plugins = about, liveupdate, place
+[DEFAULT]
+-plugins = thebutton, robin
++plugins = thebutton, robin, place
+
++place_redis_url = redis://localhost:6380/
 ```
 
-Update your ``development.update`` file:
+Then, make the ini file:
 
-```diff
-+place_redis_url = redis://localhost:6380/
+```bash
+sudo make ini
+```
+
+Then, copy the upstart scripts:
+
+```bash
+sudo cp ~/src/place/upstart/* /etc/init/
 ```
 
 Finally, you'll need redis running.  You can run it in the background or in a
@@ -37,11 +44,19 @@ cd redis-stable
 make
 ```
 
+To start a screen session, run:
+
+```bash
+screen -S redis
+```
+
 Then run:
 
 ```bash
 src/redis-server --port 6380
 ```
+
+To exit screen, press `CTRL + A` and then press `D`
 
 ## Restoring the Board
 
