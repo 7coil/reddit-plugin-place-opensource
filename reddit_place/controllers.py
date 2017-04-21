@@ -246,9 +246,6 @@ class PlaceController(RedditController):
     @allow_oauth2_access
     def POST_draw(self, responder, x, y, color):
 
-        # End the game
-        self.abort403()
-
         if c.user._date >= ACCOUNT_CREATION_CUTOFF:
             self.abort403()
 
