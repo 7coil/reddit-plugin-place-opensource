@@ -246,8 +246,8 @@ class PlaceController(RedditController):
     @allow_oauth2_access
     def POST_draw(self, responder, x, y, color):
 
-        if c.user._date >= ACCOUNT_CREATION_CUTOFF:
-            self.abort403()
+       #if c.user._date >= ACCOUNT_CREATION_CUTOFF:
+       #    self.abort403()
 
         if PLACE_SUBREDDIT.is_banned(c.user):
             self.abort403()
