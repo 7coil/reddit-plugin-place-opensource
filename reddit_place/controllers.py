@@ -113,19 +113,8 @@ class LoggedOutPlaceController(BaseController):
             response.headers['Cache-Control'] = \
                 'max-age=1, stale-while-revalidate=1'
 
-        # nostalecache
-        dont_stalecache = 'nostalecache' in request.GET or not g.stalecache
-        if dont_stalecache:
-            board_bitmap = None
-        else:
-            board_bitmap = g.stalecache.get('place:board_bitmap')
-
-        # redis
-        if not board_bitmap:
-            board_bitmap = self._get_board_bitmap()
-            if not dont_stalecache:
-                g.stalecache.set('place:board_bitmap', board_bitmap, time=1,
-                                 noreply=True)
+        # always get the current canvas
+        board_bitmap = self._get_board_bitmap()
 
         return self._get_board_bitmap()
 
