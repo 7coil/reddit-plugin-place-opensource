@@ -12,7 +12,7 @@
       // Show actual numbers up until we'd show at least 1.1k
       return (count / 1000).toFixed(1) + 'k';
     }
-    return count.toString();
+    return count.toString() || "¯\_(ツ)_/¯";
   }
 
   return {
