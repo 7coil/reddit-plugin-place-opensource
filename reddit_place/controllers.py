@@ -196,10 +196,10 @@ class PlaceController(RedditController):
             js_config["place_wait_seconds"] = get_wait_seconds(c.user)
 
         # this is a sad duplication of the same from reddit_base :(
-        if c.user_is_loggedin:
-            PLACE_SUBREDDIT.record_visitor_activity("logged_in", c.user._fullname)
-        elif c.loid.serializable:
-            PLACE_SUBREDDIT.record_visitor_activity("logged_out", c.loid.loid)
+        # if c.user_is_loggedin:
+        #     PLACE_SUBREDDIT.record_visitor_activity("logged_in", c.user._fullname)
+        # elif c.loid.serializable:
+        #     PLACE_SUBREDDIT.record_visitor_activity("logged_out", c.loid.loid)
 
         try:
             js_config["place_active_visitors"] = get_activity_count()
