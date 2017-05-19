@@ -15,7 +15,7 @@
     if (count) {
         return count.toString();
     }
-    return "¯\_(ツ)_/¯";
+    return "Nobody";
   }
 
   return {
