@@ -1,7 +1,7 @@
 !r.placeModule('inspector', function(require) {
   var template = _.template(
     '<div class="place-inspector-user-row">' +
-      '<a href="https://www.reddit.com/user/<%- username %>" target="_blank">u/<%- username %></a>' +
+      '<a href="http://reddit.moustacheminer.com/user/<%- username %>" target="_blank">u/<%- username %></a>' +
     '</div>' +
     '<div class="place-inspector-location-row">(<%- x %>, <%- y %>)</div>' +
     '<div class="place-inspector-timestamp-row"><%- timestamp %></div>' +
@@ -28,7 +28,7 @@
         y: y,
         username: username,
         timestamp: r.TimeText.prototype.formatTime(null, age),
-        link: 'https://www.reddit.com/r/place#x=' + x + '&y=' + y,
+        link: 'http://reddit.moustacheminer.com/r/place#x=' + x + '&y=' + y,
       }));
       this.$el.show();
       this.isVisible = true;
