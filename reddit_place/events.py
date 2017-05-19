@@ -11,7 +11,7 @@ def place_pixel(x, y, color):
     event = Event(
         topic="place_events",
         event_type="ss.place_pixel",
-        time=datetime.datetime.utcnow(),
+        time=datetime.datetime.now().replace(tzinfo=pytz.UTC),
         request=request,
         context=c,
         data={
