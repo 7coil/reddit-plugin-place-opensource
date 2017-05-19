@@ -45,7 +45,7 @@ class RedisCanvas(object):
         UINT_SIZE = 'u4'  # Max value: 15
         offset = y * CANVAS_WIDTH + x
         c.place_redis.execute_command(
-            'bitfield', CANVAS_ID, 'SET',
+            'BITFIELD', CANVAS_ID, 'SET',
             UINT_SIZE, '#%d' % offset, color)
 
 

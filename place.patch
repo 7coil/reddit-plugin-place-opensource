@@ -1,0 +1,56 @@
+commit 41d8641fd0560f60aab3809e760c554844ede157
+Author: Dan <xxx@xxx.com>
+Date:   Wed Mar 15 15:25:28 2017 -0700
+
+    Add redis connection pool for place.
+
+diff --git a/r2/r2/lib/app_globals.py b/r2/r2/lib/app_globals.py
+index 02c6ceb..dbe3f79 100644
+--- a/r2/r2/lib/app_globals.py
++++ b/r2/r2/lib/app_globals.py
+@@ -36,9 +36,11 @@ import socket
+ import subprocess
+ import sys
+
++import redis
+ from sqlalchemy import engine, event
+ from baseplate import Baseplate, config as baseplate_config
+ from baseplate.thrift_pool import ThriftConnectionPool
++from baseplate.context.redis import RedisContextFactory
+ from baseplate.context.thrift import ThriftContextFactory
+ from baseplate.server import einhorn
+
+@@ -378,6 +380,14 @@ class Globals(object):
+             "tracing_endpoint",
+         ],
+
++        ConfigValue.baseplate(baseplate_config.Optional(baseplate_config.String)): [
++            "place_redis_url",
++        ],
++
++        ConfigValue.baseplate(baseplate_config.Optional(baseplate_config.Integer)): [
++            "place_redis_max_connections",
++        ],
++
+         ConfigValue.tuple_of(ConfigValue.baseplate(ipaddress.IPv4Network)): [
+             "scraper_ip_whitelist",
+         ],
+@@ -866,6 +876,18 @@ class Globals(object):
+                 "listing_service",
+                 ThriftContextFactory(listing_pool, ListingService.Client))
+
++        ################# PLACE
++        # e.g. "redis://localhost:6379/"
++        place_redis_url = self.config.get("place_redis_url")
++        if place_redis_url:
++            place_redis_pool = redis.BlockingConnectionPool.from_url(
++                place_redis_url,
++                max_connections=self.config.get("place_redis_max_connections", 1),
++                timeout=0.1,
++            )
++            self.baseplate.add_to_context("place_redis", RedisContextFactory(
++                place_redis_pool))
++
+         self.startup_timer.intermediate("thrift")
+
+         ################# CASSANDRA
